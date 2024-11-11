@@ -1,0 +1,35 @@
+* {
+    font-family: "Poppins",sans-serif;
+    color:#2c2c2c;
+}
+body{
+    background-color: #EDEDE9;
+}
+header{
+background-color: #E3D5CA;
+border-radius: 25px;
+margin-left: 10%;
+width:80%
+}
+h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+.list-Manager{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width:80%;
+    margin-left: 10%;
+}
+aside{
+    background-color: #E3D5CA;
+    width: 20%;
+    border-radius: 10px;
+}
+h2{
+    font-size: 25px;
+   text-align: center;
+}
