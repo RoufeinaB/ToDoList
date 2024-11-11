@@ -1,33 +1,32 @@
-// Sélection des éléments HTML
+// Sélection le HTML
 const main = document.querySelector("main");
 const doneCheckbox = document.getElementById("done");
 const notDoneCheckbox = document.getElementById("not-done");
 
-// Charger les données depuis le localStorage au chargement de la page
+// LocalStorage
 window.onload = () => {
     loadListsFromStorage();
 };
 
-// Sauvegarde les listes dans le localStorage
+// Sauvegarde les listes
 function saveListsToStorage() {
     const lists = [];
 
-    // Récupérer toutes les listes présentes dans le DOM
-    document.querySelectorAll(".list-container").forEach((listContainer) => {
-        const listTitle = listContainer.querySelector("h3").textContent;
-        const tasks = [];
+document.querySelectorAll(".list-container").forEach((listContainer) => {
+    const listTitle = listContainer.querySelector("h3").textContent;
+    const tasks = [];
 
-        listContainer.querySelectorAll(".task").forEach((taskElement) => {
-            const taskCheckbox = taskElement.querySelector("input[type='checkbox']");
-            const taskLabel = taskElement.querySelector("label").textContent;
-            const [taskText, taskDate] = taskLabel.split(" - ");
+listContainer.querySelectorAll(".task").forEach((taskElement) => {
+    const taskCheckbox = taskElement.querySelector("input[type='checkbox']");
+    const taskLabel = taskElement.querySelector("label").textContent;
+    const [taskText, taskDate] = taskLabel.split(" - ");
             
-            tasks.push({
-                text: taskText,
-                date: taskDate,
-                done: taskCheckbox.checked
-            });
+        tasks.push({
+            text: taskText,
+            date: taskDate,
+            done: taskCheckbox.checked
         });
+    });
 
         lists.push({
             title: listTitle,
@@ -38,7 +37,6 @@ function saveListsToStorage() {
     localStorage.setItem("todoLists", JSON.stringify(lists));
 }
 
-// Charger les listes depuis le localStorage
 function loadListsFromStorage() {
     const lists = JSON.parse(localStorage.getItem("todoLists")) || [];
     lists.forEach((list) => {
@@ -46,18 +44,18 @@ function loadListsFromStorage() {
     });
 }
 
-// Fonction pour ajouter une nouvelle liste avec un nom personnalisé et des tâches
+// Ajouter une listes
 function addList(listName = null, tasks = []) {
     const listContainer = document.createElement("div");
     listContainer.classList.add("list-container");
 
-    // Demander un nom pour la nouvelle liste si non fourni
-    const listTitleText = listName || prompt("Entrez le nom de la nouvelle liste :") || "Nouvelle Liste";
+    // Demander un nom
+    const listTitleText = l|istName | prompt("Entrez le nom de la nouvelle liste :") || "Nouvelle Liste";
 
     const listTitle = document.createElement("h3");
     listTitle.textContent = listTitleText;
 
-    // Bouton pour renommer la liste
+    // Renommer la liste
     const renameBtn = document.createElement("button");
     renameBtn.textContent = "Renommer";
     renameBtn.onclick = () => {
@@ -65,19 +63,18 @@ function addList(listName = null, tasks = []) {
         saveListsToStorage();
     };
 
-    // Bouton pour supprimer la liste
+    // Supprimer la liste
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Supprimer";
     deleteBtn.onclick = () => {
         deleteList(listContainer);
         saveListsToStorage();
     };
-
     const taskInput = document.createElement("input");
     taskInput.type = "text";
     taskInput.placeholder = "Nouvelle tâche...";
 
-    // Champs pour la date
+    //La date
     const dateInput = document.createElement("input");
     dateInput.type = "date";
 
@@ -97,11 +94,11 @@ function addList(listName = null, tasks = []) {
     listContainer.appendChild(addTaskBtn);
     main.appendChild(listContainer);
 
-    // Ajouter les tâches existantes (utilisé lors du chargement depuis le localStorage)
+    // Ajouter les tâches existantes
     tasks.forEach(task => displayTask(task, listContainer));
 }
 
-// Fonction pour renommer une liste
+// Renommer une liste
 function renameList(listTitle) {
     const newName = prompt("Entrez le nouveau nom de la liste :");
     if (newName) {
@@ -109,12 +106,12 @@ function renameList(listTitle) {
     }
 }
 
-// Fonction pour supprimer une liste
+// Supprimer une liste
 function deleteList(listContainer) {
     main.removeChild(listContainer);
 }
 
-// Fonction pour ajouter une tâche avec le texte et la date choisie par l'utilisateur
+// Ajouter une tâche
 function addTask(taskText, dateValue, listContainer) {
     if (!taskText) return;
 
@@ -127,7 +124,7 @@ function addTask(taskText, dateValue, listContainer) {
     displayTask(task, listContainer);
 }
 
-// Fonction pour afficher une tâche dans la liste avec option de modification
+// Afficher une tâche
 function displayTask(task, listContainer) {
     const taskElement = document.createElement("div");
     taskElement.classList.add("task");
@@ -143,7 +140,7 @@ function displayTask(task, listContainer) {
         saveListsToStorage();
     };
 
-    // Bouton pour modifier la tâche
+    // Modifier la tâche
     const editTaskBtn = document.createElement("button");
     editTaskBtn.textContent = "Modifier";
     editTaskBtn.onclick = () => {
@@ -157,7 +154,7 @@ function displayTask(task, listContainer) {
     listContainer.appendChild(taskElement);
 }
 
-// Fonction pour modifier le texte et la date de la tâche
+// Fonction pour modifier le texte 
 function editTask(task, taskLabel, taskCheckbox) {
     const newText = prompt("Modifiez le nom de la tâche :", task.text);
     const newDate = prompt("Modifiez la date de la tâche (format JJ/MM/AAAA) :", task.date.split("/").reverse().join("-"));
@@ -194,6 +191,6 @@ function filterTasks() {
     });
 }
 
-// Ajout d'écouteurs pour les filtres
+// pour les filtres
 doneCheckbox.addEventListener("change", filterTasks);
 notDoneCheckbox.addEventListener("change", filterTasks);
